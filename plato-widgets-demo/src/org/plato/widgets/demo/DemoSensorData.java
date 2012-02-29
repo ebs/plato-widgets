@@ -6,17 +6,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "sensorData")
 public class DemoSensorData {
-	
+
 	Long id;
+
 	Double temperature;
+
 	Double pressure;
+
 	Double humidity;
+
 	Date observationDate;
-	
+
 	public DemoSensorData() {
-		temperature = Math.random()*100;
-		pressure = Math.random();
-		humidity = Math.random();
+		temperature = Math.random() * 100;
+		pressure = Math.random() * 100;
+		humidity = Math.random() * 100;
 		observationDate = new Date();
 	}
 
@@ -51,7 +55,7 @@ public class DemoSensorData {
 	public void setHumidity(Double humidity) {
 		this.humidity = humidity;
 	}
-	
+
 	public Date getObservationDate() {
 		return observationDate;
 	}
