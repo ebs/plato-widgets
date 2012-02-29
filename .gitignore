@@ -1,0 +1,12 @@
+.DS_Store
+/test-classes
+/test-classes/**/*
+/plato-widgets-demo/war/WEB-INF/deploy
+/plato-widgets-demo/war/WEB-INF/deploy/**/*
+/plato-widgets-demo/war/WEB-INF/classes
+/plato-widgets-demo/war/WEB-INF/classes/**/*
+/plato-widgets-demo/war/WEB-INF/appengine-generated/
+/plato-widgets-demo/war/WEB-INF/appengine-generated/**/*
+/.gwt
+/.gwt/**
+/gwt-unitCache

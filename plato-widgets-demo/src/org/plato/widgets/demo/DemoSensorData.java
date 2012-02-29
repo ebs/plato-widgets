@@ -42,8 +42,7 @@ public class DemoSensorData {
 		this.humidity = humidity;
 	}
 	
-	public DemoSensorData(Long _id) {
-		id = _id;
+	public DemoSensorData() {
 		temperature = Math.random()*100;
 		pressure = Math.random();
 		humidity = Math.random();
