@@ -1,5 +1,7 @@
 package org.plato.widgets.demo;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "sensorData")
@@ -9,7 +11,15 @@ public class DemoSensorData {
 	Double temperature;
 	Double pressure;
 	Double humidity;
+	Date observationDate;
 	
+	public DemoSensorData() {
+		temperature = Math.random()*100;
+		pressure = Math.random();
+		humidity = Math.random();
+		observationDate = new Date();
+	}
+
 	public Double getTemperature() {
 		return temperature;
 	}
@@ -42,10 +52,12 @@ public class DemoSensorData {
 		this.humidity = humidity;
 	}
 	
-	public DemoSensorData() {
-		temperature = Math.random()*100;
-		pressure = Math.random();
-		humidity = Math.random();
+	public Date getObservationDate() {
+		return observationDate;
+	}
+
+	public void setObservationDate(Date observationDate) {
+		this.observationDate = observationDate;
 	}
 
 }
