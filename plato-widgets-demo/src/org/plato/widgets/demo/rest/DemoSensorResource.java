@@ -10,7 +10,7 @@ import org.plato.widgets.demo.DemoSensorData;
 
 @Path("sensor")
 public class DemoSensorResource {
-	
+
 	@GET
 	@Path("{id}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
