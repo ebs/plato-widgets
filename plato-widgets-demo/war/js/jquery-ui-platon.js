@@ -159,7 +159,7 @@
 		start : function() {
 			var self = this;
 			self._refresh();
-			this.gaugeIntervalID = setInterval(function() {
+			self.gaugeIntervalID = setInterval(function() {
 				self._refresh();
 			}, self.options.data.interval);
 		},
