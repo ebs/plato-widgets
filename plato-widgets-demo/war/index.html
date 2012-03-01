@@ -1,27 +1,93 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
-
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>PLATO Widget Demo</title>
-  </head>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+body,td {
+	font-size: 10px;
+}
+</style>
+<link type="text/css" href="css/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
+<link type="text/css" href="css/jquery-ui-platon.css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-platon.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load('visualization', '1.0', {
+		'packages' : [ 'corechart', 'gauge' ]
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#gaugeChart_div').gauge({
+			data : {
+				url : "rest/sensor/2",
+				interval : 1000,
+				properties : [ {
+					name : "Temperature",
+					type : "number",
+					property : "temperature"
+				}, {
+					name : "Humidity",
+					type : "number",
+					property : "humidity"
+				} ]
+			},
+			chart : {
+				width : 300,
+				height : 300,
+				redFrom : 90,
+				redTo : 100,
+				yellowFrom : 75,
+				yellowTo : 90,
+				minorTicks : 5,
+				animation : {
+					duration : 1000,
+					easing : 'out'
+				}
+			}
+		});
+		$('#gaugeChart_div').gauge("start");
 
-  <body>
-    <h1>PLATO Widget Demo</h1>
-	
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available REST calls:</td>        
-      </tr>
-      <tr>
-        <td><a href="rest/sensor">demo sensor</a></td>
-      </tr>
-    </table>
-  </body>
+		$('#gaugeChart2_div').gauge({
+			data : {
+				url : "rest/sensor/2",
+				interval : 1000,
+				properties : [ {
+					name : "Temperature",
+					type : "number",
+					property : "temperature"
+				}, {
+					name : "Humidity",
+					type : "number",
+					property : "humidity"
+				} ]
+			},
+			chart : {
+				width : 300,
+				height : 300,
+				redFrom : 90,
+				redTo : 100,
+				yellowFrom : 75,
+				yellowTo : 90,
+				minorTicks : 5,
+				animation : {
+					duration : 1000,
+					easing : 'out'
+				}
+			}
+		});
+
+		$('#gaugeChart2_div').gauge("start");
+
+	});
+</script>
+</head>
+<body>
+	<h1>PLATON</h1>
+	<div id="gaugeChart_div"></div>
+	<div id="gaugeChart2_div"></div>
+</body>
 </html>
