@@ -118,7 +118,7 @@
 					var i, property, value;
 					for (i = 0; i < self.options.data.properties.length; i += 1) {
 						property = self.options.data.properties[i].property;
-						value = parseFloat(eval('json.' + property));
+						value = eval('json.' + property);
 						self.gaugeData.setValue(0, i, value);
 						formatter.format(self.gaugeData, i);
 					}

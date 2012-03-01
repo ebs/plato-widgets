@@ -23,16 +23,16 @@ body,td {
 	$(document).ready(function() {
 		$('#gaugeChart_div').gauge({
 			data : {
-				url : "rest/sensor/2",
-				interval : 1000,
+				url : "rest/sensor/3",
+				interval : 4000,
 				properties : [ {
 					name : "Temperature",
 					type : "number",
 					property : "temperature"
 				}, {
-					name : "Humidity",
+					name : "Pressure",
 					type : "number",
-					property : "humidity"
+					property : "pressure"
 				} ]
 			},
 			chart : {
@@ -54,7 +54,7 @@ body,td {
 		$('#gaugeChart2_div').gauge({
 			data : {
 				url : "rest/sensor/2",
-				interval : 1000,
+				interval : 3000,
 				properties : [ {
 					name : "Temperature",
 					type : "number",
