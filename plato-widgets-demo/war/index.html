@@ -11,7 +11,7 @@ body,td {
 <link type="text/css" href="css/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
 <link type="text/css" href="css/jquery-ui-platon.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.js"></script>
 <script type="text/javascript" src="js/jquery-ui-platon.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -51,10 +51,12 @@ body,td {
 		});
 		$('#gaugeChart_div').gauge("start");
 
-		$('#gaugeChart2_div').gauge({
+		$('#gaugeChart2_div').line({
 			data : {
 				url : "rest/sensor/2",
 				interval : 3000,
+				time : "observationDate",
+				max : 20,
 				properties : [ {
 					name : "Temperature",
 					type : "number",
@@ -66,7 +68,7 @@ body,td {
 				} ]
 			},
 			chart : {
-				width : 300,
+				width : 600,
 				height : 300,
 				redFrom : 90,
 				redTo : 100,
@@ -80,14 +82,18 @@ body,td {
 			}
 		});
 
-		$('#gaugeChart2_div').gauge("start");
+		$('#gaugeChart2_div').line("start");
 
 	});
 </script>
 </head>
 <body>
 	<h1>PLATON</h1>
-	<div id="gaugeChart_div"></div>
-	<div id="gaugeChart2_div"></div>
+	<table>
+		<tr>
+			<td valign="top"><div id="gaugeChart_div"></div></td>
+			<td valign="top"><div id="gaugeChart2_div"></div></td>
+		</tr>
+	</table>
 </body>
 </html>
