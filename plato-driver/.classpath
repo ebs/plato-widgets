@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="sarcontent/lib/sensorml-v_1_0_1-schema-1.0.3.jar"/>
+	<classpathentry kind="lib" path="sarcontent/lib/gml-v_3_1_1-schema-1.0.3.jar"/>
+	<classpathentry kind="lib" path="sarcontent/lib/swecommon-v_1_0_1-schema-1.0.3.jar"/>
+	<classpathentry kind="lib" path="sarcontent/lib/om-v_1_0_0-schema-1.0.3.jar"/>
+	<classpathentry kind="lib" path="sarcontent/lib/ic-v_2_0-schema-1.0.3.jar"/>
+	<classpathentry kind="lib" path="sarcontent/lib/jaxb2-basics-runtime-0.6.3.jar"/>
+	<classpathentry kind="lib" path="sarcontent/lib/jaxb-impl.jar"/>
+	<classpathentry kind="lib" path="sarcontent/lib/jaxb-xjc.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

@@ -7,6 +7,8 @@
 /plato-widgets-demo/war/WEB-INF/classes/**/*
 /plato-widgets-demo/war/WEB-INF/appengine-generated/
 /plato-widgets-demo/war/WEB-INF/appengine-generated/**/*
+/plato-driver/build
+/plato-driver/build/**/*
 /.gwt
 /.gwt/**
 /gwt-unitCache

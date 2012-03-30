@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project name="plato-driver" default="deploy" basedir=".">
+	<property file="build.properties" />
+	<property environment="env" />
+	<property name="jboss.args" value="--server-config=standalone.xml" />
+
+	<!-- Jboss dirs -->
+	<property name="jboss.home" value="${deps.dir}/jboss-as-${jboss.version}" />
+	<property name="jboss.standalone.dir" value="${jboss.home}/standalone" />
+	<property name="jboss.configuration.dir" value="${jboss.standalone.dir}/configuration" />
+	<property name="jboss.deploy.dir" value="${jboss.standalone.dir}/deployments" />
+	<property name="jboss.modules.dir" value="${jboss.home}/modules" />
+	
+	<property name="install.dir" value="${basedir}/jboss" />
+
+	<!-- Source dirs -->
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="lib.dir" value="${basedir}/sarcontent/lib" />
+
+	<!-- Services (MBeans) -->
+	<property name="sar.dir" value="${basedir}/sarcontent" />
+	<property name="sar.meta-inf.dir" value="${sar.dir}/META-INF" />
+
+	<!-- Build dirs -->
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="dist.jar" value="${ant.project.name}.jar" />
+	<property name="dist.sar" value="${ant.project.name}.sar" />
+
+	<!-- set classpath -->
+	<path id="project.class.path">
+		<pathelement path="${build.dir}" />
+		<fileset dir="${lib.dir}" includes="*.jar" />
+		<!-- Include everything and get it over with! -->
+		<fileset dir="${jboss.modules.dir}" includes="**/*.jar" />
+	</path>
+
+	<target name="compile" description="Compile src to classes">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" debuglevel="lines,vars,source" encoding="UTF-8">
+			<classpath refid="project.class.path" />
+		</javac>
+		<jar destfile="${build.dir}/${dist.jar}">
+			<zipfileset dir="${classes.dir}">
+				<include name="**/*" />
+			</zipfileset>
+		</jar>
+	</target>
+
+
+	<target name="package-sar" description="Package up the sar classes" depends="compile">
+		<jar destfile="${build.dir}/${dist.sar}">
+			<metainf dir="${sar.meta-inf.dir}" />
+			<zipfileset dir="${build.dir}">
+				<include name="${dist.jar}" />
+			</zipfileset>
+			<zipfileset dir="${lib.dir}" prefix="lib/">
+				<include name="*.jar" />
+			</zipfileset>
+		</jar>
+	</target>
+	
+	<target name="install" description="Deploy the project to the server">
+		<copy todir="${jboss.home}" overwrite="true" failonerror="false">
+			<fileset dir="${install.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="deploy" description="Deploy the project to the server">
+		<antcall target="package-sar" />
+		<copy todir="${jboss.deploy.dir}" file="${build.dir}/${dist.sar}" />
+	</target>
+
+	<target name="undeploy" description="Deploy the project to the server">
+		<delete dir="${jboss.deploy.dir}">
+			<include name="${dist.sar}*"/>
+		</delete>
+	</target>
+
+	<target name="clean" description="Delete the contents of the bin and www directories">
+		<delete dir="${build.dir}" />
+	</target>
+
+</project>

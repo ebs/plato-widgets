@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+	<deployment>
+		<dependencies>
+			<module name="deployment.module.nested" />
+		</dependencies>
+	</deployment>
+	<module name="deployment.module.nested">
+		<resources>
+			<resource-root path="lib/jaxb-impl.jar" />
+			<resource-root path="lib/jaxb-xjc.jar" />
+			<resource-root path="lib/jaxb2-basics-runtime-0.6.3.jar" />
+			<resource-root path="lib/sensorml-v_1_0_1-schema-1.0.3.jar" />
+			<resource-root path="lib/gml-v_3_1_1-schema-1.0.3.jar" />
+			<resource-root path="lib/swecommon-v_1_0_1-schema-1.0.3.jar" />
+			<resource-root path="lib/om-v_1_0_0-schema-1.0.3.jar" />
+			<resource-root path="lib/ic-v_2_0-schema-1.0.3.jar" />
+			<resource-root path="lib/RXTXcomm.jar" />
+			<resource-root path="plato-driver.jar" />
+		</resources>
+	</module>
+</jboss-deployment-structure>

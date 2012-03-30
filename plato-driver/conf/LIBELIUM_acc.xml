@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sml:SensorML version="1.0.1" xmlns:sml="http://www.opengis.net/sensorML/1.0.1" xmlns:gml="http://www.opengis.net/gml" xmlns:swe="http://www.opengis.net/swe/1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/sensorML/1.0.1 http://schemas.opengis.net/sensorML/1.0.1/sensorML.xsd">
+	<sml:member>
+		<sml:Component gml:id="Libelium_acc">
+			
+			<!-- ==================================-->
+			<!--            LIBELIUM IDENTIFICATIONS                -->
+			<!-- ================================== -->	
+			<sml:identification>
+				<sml:IdentifierList>
+					<sml:identifier name="uniqueID">
+						<sml:Term definition="urn:ogc:def:identifier:OGC:1.0:uniqueID">
+							<sml:value>Libelium_1</sml:value>
+						</sml:Term>
+					</sml:identifier>
+					<sml:identifier name="modelName">
+						<sml:Term definition="urn:ogc:def:identifier:OGC:1.0:modelName">
+							<sml:value>Libelium WaspMote Board</sml:value>
+						</sml:Term>
+					</sml:identifier>
+					<sml:identifier name="shortName">
+						<sml:Term definition="urn:ogc:def:identifier:OGC:1.0:shortName">
+							<sml:value>Libelium Driver 1</sml:value>
+						</sml:Term>
+					</sml:identifier>
+					<sml:identifier name="longName">
+						<sml:Term definition="urn:ogc:def:identifier:OGC:1.0:longName">
+							<sml:value>A Driver for Libelium nodes which parse accelerometer's and thermometer's data</sml:value>
+						</sml:Term>
+					</sml:identifier>
+				</sml:IdentifierList>
+			</sml:identification>
+		
+			<!-- ==================================-->
+			<!--            LIBELIUM CLASSIFICATION                -->
+			<!-- ==================================-->
+			<sml:classification>
+				<sml:ClassifierList id="libelium_acc_class">
+					<sml:classifier name="intendedApplication">
+						<sml:Term definition="urn:ogc:def:classifier:application">
+							<sml:value>movement</sml:value>
+						</sml:Term>
+					</sml:classifier>					
+					<sml:classifier name="sensorType">
+						<sml:Term definition="urn:ogc:def:classifier:sensorType">
+							<sml:value>thermometer</sml:value>
+						</sml:Term>
+					</sml:classifier>					
+					<sml:classifier name="sensorType">
+						<sml:Term definition="urn:ogc:def:classifier:sensorType">
+							<sml:value>accelerometer_x</sml:value>
+						</sml:Term>
+					</sml:classifier>
+					<sml:classifier name="sensorType">
+						<sml:Term definition="urn:ogc:def:classifier:sensorType">
+							<sml:value>accelerometer_y</sml:value>
+						</sml:Term>
+					</sml:classifier>
+					<sml:classifier name="sensorType">
+						<sml:Term definition="urn:ogc:def:classifier:sensorType">
+							<sml:value>accelerometer_z</sml:value>
+						</sml:Term>
+					</sml:classifier>
+				</sml:ClassifierList>
+			</sml:classification>	
+		
+			<!-- ==================================-->
+			<!--            LIBELIUM CAPABILITIES                    -->
+			<!-- ==================================-->	
+			<sml:capabilities>
+				<swe:DataRecord  definition="urn:ogc:def:property:capabilities">
+					<swe:field name="status">
+							<swe:Boolean definition="urn:ogc:def:property:OGC:1.0:isActive">
+								<swe:value>true</swe:value>
+							</swe:Boolean>
+					</swe:field>
+					<swe:field name="mobile">
+						<swe:Boolean definition="urn:ogc:def:property:OGC:1.0:isMobile">
+							<swe:value>true</swe:value>
+						</swe:Boolean>
+					</swe:field>
+					<swe:field name="measuringInterval">
+						<swe:Quantity definition="urn:ogc:def:property:OGC:1.0:measuringInterval">
+							<gml:description>The measuring interval of the Libelium's board.</gml:description>
+							<swe:uom code="msec" xlink:href="urn:ogc:def:uom:UCUM::msec"/>
+							<swe:value>2000</swe:value>
+						</swe:Quantity>
+					</swe:field>
+					<swe:field name="transmissionFrequency">
+						<swe:Quantity definition="urn:ogc:def:property:OGC:1.0:transmissionFrequency">
+							<gml:description>The transmission frequency of the weather station.</gml:description>
+							<swe:uom code="GHz" xlink:href="urn:ogc:def:uom:UCUM::GHz"/>
+							<swe:value>2.4</swe:value>
+						</swe:Quantity>
+					</swe:field>
+					<swe:field name="powerSupply">
+						<swe:Text definition="urn:ogc:def:property:OGC:1.0:powerSupply">
+							<gml:description>The power supply of the Libelium's board.</gml:description>
+							<swe:value>Lithium-ion battery (Li-Ion) with 3.7V nominal voltage</swe:value>
+						</swe:Text>
+					</swe:field>
+					
+				</swe:DataRecord>
+			</sml:capabilities>
+			
+			<!-- ==================================-->
+			<!--            LIBELIUM INTERFACE                        -->
+			<!-- ==================================-->	
+			<sml:interfaces>
+			<sml:InterfaceList>
+				<sml:interface name="serial">
+					<sml:InterfaceDefinition>
+						<sml:physicalLayer>
+							<swe:DataRecord definition="USB to Serial Converter" >
+								<swe:field name="port">
+									<swe:Text>
+										<swe:value>COM4</swe:value>
+									</swe:Text>
+								</swe:field>
+								<swe:field name="baudrate">
+									<swe:Quantity>
+										<swe:value>9600</swe:value>
+									</swe:Quantity>
+								</swe:field>
+								<swe:field name="num-bits">
+									<swe:Quantity>
+										<swe:value>8</swe:value>
+									</swe:Quantity>
+								</swe:field>
+								<swe:field name="parity">
+									<swe:Boolean>
+										<swe:value>false</swe:value>
+									</swe:Boolean>
+								</swe:field>
+
+							</swe:DataRecord>
+						</sml:physicalLayer>
+					</sml:InterfaceDefinition>
+				</sml:interface>
+			</sml:InterfaceList>
+			</sml:interfaces>
+			
+			<!-- ==================================-->
+			<!--            LIBELIUM OUTPUTS                           -->
+			<!-- ==================================-->	
+			<sml:outputs>
+				<sml:OutputList id="libelium_acc_out">
+					<sml:output name="sensor_id">
+						<swe:Text gml:id="mac"/>
+					</sml:output>
+					<sml:output name="temperature" >
+						<swe:Quantity  gml:id="temp" definition="urn:ogc:def:phenomenon:temperature">
+							<swe:uom code="Celsius"/>
+						</swe:Quantity>
+					</sml:output>
+					<!-- 
+					<sml:output name="accelerometer X">
+						<swe:Quantity gml:id="accx" definition="urn:ogc:def:phenomenon:acceleration" axisID="X">
+							<swe:uom code="Degree"/>
+						</swe:Quantity>
+					</sml:output>
+					<sml:output name="accelerometer Y">
+						<swe:Quantity gml:id="accy" definition="urn:ogc:def:phenomenon:acceleration" axisID="Y">
+							<swe:uom code="Degree"/>
+						</swe:Quantity>
+					</sml:output>
+					<sml:output name="accelerometer X">
+						<swe:Quantity gml:id="accz" definition="urn:ogc:def:phenomenon:acceleration" axisID="Z">
+							<swe:uom code="Degree"/>
+						</swe:Quantity>
+					</sml:output>
+					<sml:output name="battery lever">
+						<swe:Quantity gml:id="bat" >
+							<swe:uom code="%"/>
+						</swe:Quantity>
+					</sml:output>
+					 -->
+				</sml:OutputList>
+			</sml:outputs>
+		
+		</sml:Component>
+	</sml:member>
+</sml:SensorML>
