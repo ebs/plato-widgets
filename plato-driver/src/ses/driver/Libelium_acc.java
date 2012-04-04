@@ -318,6 +318,7 @@ public class Libelium_acc implements DriverInterface {
 			returnXML = sw.toString();
 			//System.out.println(st);
 
+
 		} catch (JAXBException ex) {
 			Logger.getLogger(Libelium_acc.class.getName()).log(Level.SEVERE, null, ex);
 		}

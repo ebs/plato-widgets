@@ -1,25 +1,22 @@
-package ses.main.logic;
+package org.plato.server.model;
 
-import java.beans.ConstructorProperties;
+import java.io.Serializable;
 import java.util.Date;
 
-public class ValueFormat {
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "measurement")
+public class Measurement implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String name;
 
 	private String type;
 
-	public String value;
+	private String value;
 
-	public Date timestamp;
-
-	@ConstructorProperties({"name", "type", "value", "timestamp"})
-	public ValueFormat(String name, String type, String value, Date timestamp) {
-		this.name = name;
-		this.type = type;
-		this.value = value;
-		this.timestamp = timestamp;
-	}
+	private Date timestamp;
 
 	public String getName() {
 		return name;
@@ -53,13 +50,4 @@ public class ValueFormat {
 		this.timestamp = timestamp;
 	}
 
-	public String toString() {
-		String s = "";
-
-		s += "Name : " + name;
-		s += "\tType : " + type;
-		s += "\tValue : " + value;
-
-		return s;
-	}
 }

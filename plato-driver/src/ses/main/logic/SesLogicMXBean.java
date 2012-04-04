@@ -1,11 +1,15 @@
 package ses.main.logic;
 
+import java.util.Map;
 
-public interface SesLogicMBean {
+import javax.management.MXBean;
+
+@MXBean
+public interface SesLogicMXBean {
 
 	String addNewDriver(String pathToSensorML);
 
-	String getDriversInfo();
+	Map<String, String> getDriversInfo();
 
 	String getDriverInfo(String uniqueId);
 
@@ -14,5 +18,7 @@ public interface SesLogicMBean {
 	void stopSampling(String uniqueId);
 
 	void removeDriver(String uniqueId);
+
+	String getLastReading(String uniqueId);
 
 }

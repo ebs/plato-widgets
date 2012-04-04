@@ -3,7 +3,9 @@ package ses.main.logic;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SesLogic implements SesLogicMBean {
+import javax.xml.bind.JAXBException;
+
+public class SesLogic implements SesLogicMXBean {
 
 	//PINAKAS OPOU THA BRISKONTAI APOTHIKEYMENES OI PLHROFORIES GIA OLOUS TOUS EN ENERGEIA DRIVER TOU SES
 	private Map<String, DriverConnection> drivers = new HashMap<String, DriverConnection>();
@@ -18,22 +20,23 @@ public class SesLogic implements SesLogicMBean {
 	}
 
 	@Override
-	public String addNewDriver(String pathToSensorML) {
-		DriverConnection newDriver = new DriverConnection(pathToSensorML);
-		String uniqueID = newDriver.init();
-		drivers.put(uniqueID, newDriver);
-		return uniqueID;
-
+	public String addNewDriver(String sensorML) {
+		try {
+			DriverConnection newDriver = new DriverConnection(sensorML);
+			String uniqueID = newDriver.init();
+			drivers.put(uniqueID, newDriver);
+			return uniqueID;
+		} catch (JAXBException e) {
+			return null;
+		}
 	}
 
 	@Override
-	public String getDriversInfo() {
-		String result = "";
-
+	public Map<String, String> getDriversInfo() {
+		Map<String, String> result = new HashMap<String, String>();
 		for (DriverConnection driver : drivers.values()) {
-			result += driver.getDriverInfo() + "\n";
+			result.put(driver.uniqueID, driver.getDriverInfo());
 		}
-
 		return result;
 	}
 
@@ -67,6 +70,14 @@ public class SesLogic implements SesLogicMBean {
 			driver.destroyDriver();
 			drivers.remove(uniqueId);
 		}
+	}
+
+	@Override
+	public String getLastReading(String uniqueId) {
+		if (drivers.containsKey(uniqueId)) {
+			return drivers.get(uniqueId).getLastReading();
+		}
+		return "";
 	}
 
 }

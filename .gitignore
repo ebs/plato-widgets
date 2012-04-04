@@ -1,4 +1,5 @@
 .DS_Store
+**/build.properties
 /test-classes
 /test-classes/**/*
 /plato-widgets-demo/war/WEB-INF/deploy
@@ -9,6 +10,8 @@
 /plato-widgets-demo/war/WEB-INF/appengine-generated/**/*
 /plato-driver/build
 /plato-driver/build/**/*
+/plato-server/build
+/plato-server/build/**/*
 /.gwt
 /.gwt/**
 /gwt-unitCache
