@@ -34,6 +34,8 @@ public class DriverConnection {
 
 	private ArrayList<ValueFormat> outputData;
 
+	private ArrayList<String> measurements = new ArrayList<String>();
+
 	//H KLASH TOU DRIVER. EPEIDH DEN THA XEROUME TON TYPO,
 	//TON ORIZOUME ENAN GENIKO  TYPO, KAI META THA KALOUME THN 
 	//KATALLHLH KLASH ME THN SYNARTHSH Class.forName(...)
@@ -180,14 +182,21 @@ public class DriverConnection {
 		t1 = new java.util.Timer();
 		tt = new TimerTask() {
 			public void run() {
-				driver.getLastXMLReading(-1);
+				String measurement = driver.getLastXMLReading(-1);
+				measurements.add(measurement);
+				if (measurements.size() > 10) {
+					measurements.remove(0);
+				}
 			}
 		};
 		t1.schedule(tt, 0, (int) measuringInterval);
 	}
 
 	public String getLastReading() {
-		return driver.getLastXMLReading(-1);
+		if (measurements.isEmpty()) {
+			return "";
+		}
+		return measurements.get(measurements.size() - 1);
 	}
 
 	public void stopSampling() {

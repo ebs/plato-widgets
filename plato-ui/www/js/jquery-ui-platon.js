@@ -128,19 +128,12 @@
 					var i, property, value, row = [];
 					
 					//Wed Apr 04 15:51:00 EEST 2012
-					
-					
-					var time = eval('json.' + self.options.data.time);
-					console.log(time);
-					var date = Date.parseDate("D M dd HH:mm:ss EEST yyyy", eval('json.' + self.options.data.time));
-					console.log(date);
-					
+					var date = Date.parseExact(eval('json.' + self.options.data.time), "ddd MMM dd HH:mm:ss EEST yyyy");
 					row.push(date);
 					for (i = 0; i < self.options.data.properties.length; i += 1) {
 						property = self.options.data.properties[i].property;
 						value = eval('json.' + property);
 						row.push(parseFloat(value));
-						//formatter.format(self.lineData);						
 					}
 					self.lineData.addRow(row);
 					if (self.lineData.getNumberOfRows() > self.options.data.max) {
