@@ -121,6 +121,7 @@
 			} else {
 				$.get(self.options.data.url, function(response) {
 					var json = $.xml2json(response);
+					console.log(json);
 					
 					var numberFormatter = new google.visualization.NumberFormat({formatType: 'fractionDigits'});
 					var dateFormatter = new google.visualization.DateFormat({pattern: "dd/MM/yyyy HH:mm:ss"});
@@ -128,7 +129,7 @@
 					var i, property, value, row = [];
 					
 					//Wed Apr 04 15:51:00 EEST 2012
-					var date = Date.parseExact(eval('json.' + self.options.data.time), "ddd MMM dd HH:mm:ss EEST yyyy");
+					var date = new Date(parseInt(eval('json.' + self.options.data.time)));
 					row.push(date);
 					for (i = 0; i < self.options.data.properties.length; i += 1) {
 						property = self.options.data.properties[i].property;
@@ -288,15 +289,14 @@
 			} else {
 				$.get(self.options.data.url, function(response) {
 					var json = $.xml2json(response);
-					var formatter = new google.visualization.NumberFormat({
-						formatType : 'fractionDigits'
-					});
+					console.log(json);
+					
+					var formatter = new google.visualization.NumberFormat({formatType: 'fractionDigits'});
 					var i, property, value;
 					for (i = 0; i < self.options.data.properties.length; i += 1) {
 						property = self.options.data.properties[i].property;
-						value = eval('json.' + property);
-						
-						self.gaugeData.setValue(0, i, parseFloat(value));
+						value = parseFloat(eval('json.' + property));
+						self.gaugeData.setValue(0, i, value);
 						formatter.format(self.gaugeData, i);
 					}
 					self.gaugeChart.draw(self.gaugeData, self.options.chart);

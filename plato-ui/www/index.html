@@ -7,95 +7,52 @@
 body,td {
 	font-size: 10px;
 }
+
+.divider {
+	display: block;
+	width: 100%;
+	clear: both;
+}
+
+.ui-sortable-placeholder {
+	border: 1px dotted black;
+	visibility: visible;
+	height: 100px;
+}
+
+.ui-sortable-placeholder * {
+	visibility: hidden;
+}
+
+.chartDrag {
+	float: left;
+	width: 200px;
+}
+
+.chartSortable {
+	float: left;
+	width: 640px;
+	padding-bottom: 100px;
+}
 </style>
 <link type="text/css" href="css/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
 <link type="text/css" href="css/jquery-ui-platon.css" rel="stylesheet" />
-<script type="text/javascript" src="js/date.js"></script>
 <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.js"></script>
 <script type="text/javascript" src="js/jquery.xml2json.js"></script>
 <script type="text/javascript" src="js/jquery-ui-platon.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-	google.load('visualization', '1.0', {
-		'packages' : [ 'corechart', 'gauge' ]
-	});
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#gaugeChart_div').gauge({
-			data : {
-				url : "/plato-server/measurement/Libelium_1",
-				interval : 4000,
-				properties : [ {
-					name : "Temperature",
-					type : "number",
-					property : "result.field[1].Quantity.value"
-				}, {
-					name : "Temperature2",
-					type : "number",
-					property : "result.field[1].Quantity.value"
-				}]
-			},
-			chart : {
-				width : 300,
-				height : 300,
-				redFrom : 90,
-				redTo : 100,
-				yellowFrom : 75,
-				yellowTo : 90,
-				minorTicks : 5,
-				animation : {
-					duration : 1000,
-					easing : 'out'
-				}
-			}
-		});
-		$('#gaugeChart_div').gauge("start");
-
-		$('#lineChart_div').line({
-			data : {
-				url : "/plato-server/measurement/Libelium_1",
-				interval : 3000,
-				time : "samplingTime.TimeInstant.timePosition",
-				max : 20,
-				properties : [ {
-					name : "Temperature",
-					type : "number",
-					property : "result.field[1].Quantity.value"
-				}, {
-					name : "Temperature2",
-					type : "number",
-					property : "result.field[1].Quantity.value"
-				}]
-			},
-			chart : {
-				width : 600,
-				height : 300,
-				redFrom : 90,
-				redTo : 100,
-				yellowFrom : 75,
-				yellowTo : 90,
-				minorTicks : 5,
-				animation : {
-					duration : 1000,
-					easing : 'out'
-				}
-			}
-		});
-		
-		$('#lineChart_div').line("start");
-		
-	});
-</script>
+<script type="text/javascript" src="js/platon.js"></script>
 </head>
 <body>
 	<h1>PLATON</h1>
-	<table>
-		<tr>
-			<td valign="top"><div id="gaugeChart_div"></div></td>
-			<td valign="top"><div id="lineChart_div"></div></td>
-		</tr>
-	</table>
+	<div>
+		<div id="gaugeDrag" class="chartDrag ui-state-highlight">Add Gauge</div>
+		<div id="lineDrag" class="chartDrag ui-state-highlight">Add Line</div>
+	</div>
+	<div class="divider"></div>
+
+	<div id="chartColumn1" class="chartSortable"></div>
+	<div id="chartColumn2" class="chartSortable"></div>
 </body>
 </html>
