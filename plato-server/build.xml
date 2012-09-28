@@ -74,7 +74,7 @@
 		<copy todir="${jboss.deploy.dir}" file="${build.dir}/${dist.war}" />
 	</target>
 
-	<target name="undeploy" description="Deploy the project to the server">
+	<target name="undeploy" description="Undeploy the project to the server">
 		<delete dir="${jboss.deploy.dir}">
 			<include name="${dist.war}*"/>
 		</delete>

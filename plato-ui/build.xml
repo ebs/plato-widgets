@@ -25,7 +25,7 @@
 		<touch file="${jboss.deploy.dir}/${dist.war.dir}.dodeploy" />
 	</target>
 
-	<target name="undeploy" description="Deploy the project to the server">
+	<target name="undeploy" description="Undeploy the project to the server">
 		<delete dir="${jboss.deploy.dir}/${dist.war.dir}" />
 	</target>
 
