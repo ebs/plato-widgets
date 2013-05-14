@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="java/|resources/" kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/JBoss 7.1 Runtime"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="ear/lib/commons-codec-1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="ear/lib/jackson-module-hibernate-0.7.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="ear/lib/commons-configuration-1.2.jar"/>
+	<classpathentry kind="lib" path="ear/lib/commons-fileupload-1.2.2.jar" sourcepath="C:/Users/anglen/.m2/repository/commons-fileupload/commons-fileupload/1.2.2/commons-fileupload-1.2.2-sources.jar"/>
+	<classpathentry kind="lib" path="ear/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

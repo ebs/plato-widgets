@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module xmlns="urn:jboss:module:1.1" name="org.quartz">
+	<resources>
+		<resource-root path="quartz-all-2.1.6.jar" />
+	</resources>
+	<dependencies>
+		<module name="org.slf4j" />
+		<module name="javax.api" />
+		<module name="javax.transaction.api" />
+	</dependencies>
+</module>

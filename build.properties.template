@@ -1,0 +1,4 @@
+build.sysclasspath=last
+jboss.major.version=7.1
+jboss.version=7.1.1.Final
+jboss.home=dependencies/jboss-as-7.1.1.Final

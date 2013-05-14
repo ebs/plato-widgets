@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project name="PlatonDashboard" default="deploy" basedir=".">
+	<property file="build.properties" />
+	<property environment="env" />
+	<property name="deps.dir" value="${basedir}/dependencies" />
+
+	<property name="jboss.args" value="--server-config=standalone-full.xml" />
+
+	<!-- Jboss dirs -->
+	<property name="jboss.filename" value="jboss-as-${jboss.version}.zip" />
+	<property name="jboss.download.url" value="http://download.jboss.org/jbossas/${jboss.major.version}/jboss-as-${jboss.version}/jboss-as-${jboss.version}.zip" />
+	<property name="jboss.bin.dir" value="${jboss.home}/bin" />
+	<property name="jboss.conf.dir" value="${jboss.home}/bin" />
+	<property name="jboss.standalone.configuration.dir" value="${jboss.home}/standalone/configuration" />
+	<property name="jboss.standalone.deployments.dir" value="${jboss.home}/standalone/deployments" />
+	<property name="jboss.modules.dir" value="${jboss.home}/modules" />
+
+	<!-- Application server specific configuration -->
+	<property name="jboss-spec.dir" value="${basedir}/jboss" />
+	<property name="jboss-spec.conf.dir" value="${jboss-spec.dir}/bin" />
+	<property name="jboss-spec.modules.dir" value="${jboss-spec.dir}/modules" />
+	<property name="jboss-spec.standalone.configuration.dir" value="${jboss-spec.dir}/standalone/configuration" />
+	<property name="jboss-spec.standalone.deployments.dir" value="${jboss-spec.dir}/standalone/deployments" />
+
+	<!-- Build dirs -->
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/bin" />
+	<property name="dist.ear" value="${ant.project.name}.ear" />
+
+	<property name="ear.dir" value="${basedir}/ear" />
+	<property name="ear.lib.dir" value="${ear.dir}/lib" />
+
+	<property name="rest.dist.war" value="rest.war" />
+	<property name="rest.war.dir" value="${basedir}/rest.war" />
+	<property name="rest.war.lib.dir" value="${rest.war.dir}/WEB-INF/lib" />
+
+	<property name="www.dir" value="${basedir}/www" />
+	<property name="www.dist.war" value="dashboard.war" />
+
+	<!-- Classpath -->
+	<path id="project.class.path">
+		<pathelement path="${build.dir}" />
+		<!-- Include everything and get it over with! -->
+		<fileset dir="${jboss.modules.dir}" includes="**/*.jar" />
+
+		<pathelement location="${jboss-spec.deploy.dir}/postgresql-9.1-902.jdbc4.jar" />
+		<fileset dir="${ear.lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<path id="requirejs.class.path">
+		<fileset dir="${basedir}/rjs" includes="**/*.jar" />
+	</path>
+
+	<target name="check-dependencies" description="Checks if all dependencies are present">
+		<condition property="dependencies.present">
+			<and>
+				<available file="${jboss.home}" type="dir" />
+			</and>
+		</condition>
+		<echo message="dependencies.present=${dependencies.present}" />
+	</target>
+
+	<target name="fetch-dependencies" unless="dependencies.present" description="Fetch the dpendencies if not present" depends="check-dependencies">
+		<mkdir dir="${deps.dir}" />
+		<get src="${jboss.download.url}" dest="${deps.dir}/${jboss.filename}" usetimestamp="true" />
+		<unzip src="${deps.dir}/${jboss.filename}" dest="${jboss.home}/.." />
+	</target>
+
+	<target name="install" depends="fetch-dependencies" description="Installs the configuration files of the application server">
+		<!--Install the app configuration -->
+		<copy todir="${jboss.bin.dir}" overwrite="true" failonerror="false">
+			<fileset dir="${jboss-spec.conf.dir}" />
+		</copy>
+		<copy todir="${jboss.modules.dir}" overwrite="true" failonerror="false">
+			<fileset dir="${jboss-spec.modules.dir}" />
+		</copy>
+		<copy todir="${jboss.standalone.configuration.dir}" overwrite="true" failonerror="false">
+			<fileset dir="${jboss-spec.standalone.configuration.dir}" />
+		</copy>
+		<copy todir="${jboss.standalone.deployments.dir}" overwrite="true" failonerror="false">
+			<fileset dir="${jboss-spec.standalone.deployments.dir}" />
+		</copy>
+	</target>
+
+	<target name="compile" description="Compile src to bin">
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="on" debuglevel="lines,vars,source" source="1.6" encoding="UTF-8">
+			<classpath refid="project.class.path" />
+		</javac>
+	</target>
+
+	<target name="optimizejs" description="Optimize js files">
+		<java classname="org.mozilla.javascript.tools.shell.Main" fork="yes">
+			<arg value="${basedir}/rjs/r.js" />
+			<arg value="-o" />
+			<arg value="${basedir}/app.build.js" />
+			<classpath refid="requirejs.class.path" />
+		</java>
+	</target>
+
+	<target name="package-ejb" description="Package up the EJB classes">
+		<jar destfile="${build.dir}/ejbs.jar">
+			<metainf dir="${src.dir}/META-INF" />
+			<zipfileset dir="${build.dir}">
+				<include name="**/service/**" />
+			</zipfileset>
+			<zipfileset dir="${src.dir}">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/*.png" />
+				<include name="**/*.jpg" />
+			</zipfileset>
+		</jar>
+	</target>
+
+
+	<target name="package-warRest" depends="compile" description="Package up the REST web part as a war">
+		<jar destfile="${build.dir}/${rest.dist.war}">
+			<zipfileset dir="${rest.war.dir}" />
+			<zipfileset dir="${build.dir}" prefix="WEB-INF/classes">
+				<include name="**/server/**" />
+			</zipfileset>
+		</jar>
+	</target>
+
+
+	<target name="package-ear" depends="package-warRest, package-ejb" description="Package up the project as an ear">
+		<jar destfile="${build.dir}/${dist.ear}" manifest="${ear.dir}/META-INF/MANIFEST.MF">
+			<metainf dir="${ear.dir}/META-INF" />
+			<zipfileset dir="${ear.dir}">
+				<exclude name="META-INF/**" />
+			</zipfileset>
+			<zipfileset dir="${build.dir}">
+				<include name="ejbs.jar" />
+				<include name="${rest.dist.war}" />
+			</zipfileset>
+		</jar>
+	</target>
+
+	<target name="deploy" description="Deploy the project to the server">
+		<antcall target="deploy-ear" />
+		<antcall target="deploy-www" />
+	</target>
+
+	<target name="deploy-ear" description="Deploy the project to the server">
+		<antcall target="package-ear" />
+		<copy todir="${jboss.standalone.deployments.dir}/../" file="${build.dir}/${dist.ear}" />
+		<move todir="${jboss.standalone.deployments.dir}" file="${jboss.standalone.deployments.dir}/../${dist.ear}" />
+	</target>
+
+	<target name="deploy-www" description="Deploy the www files to the server">
+		<sync todir="${jboss.standalone.deployments.dir}/${www.dist.war}">
+			<fileset dir="${www.dir}" />
+		</sync>
+		<touch file="${jboss.standalone.deployments.dir}/dashboard.war.dodeploy" />
+	</target>
+
+	<target name="redeploy-ear" depends="package-ear" description="Redeploy the project to the server">
+		<copy todir="${jboss.standalone.deployments.dir}" file="${build.dir}/${dist.ear}" overwrite="yes" />
+	</target>
+
+	<target name="undeploy-ear" description="Undeploy the project from the server">
+		<delete file="${jboss.standalone.deployments.dir}/${dist.ear}" />
+	</target>
+
+	<target name="undeploy-www" description="Undeploy the client from the server">
+		<delete dir="${jboss.standalone.deployments.dir}/${www.dist.war}" />
+		<delete file="${jboss.standalone.deployments.dir}/${www.dist.war}.deployed" />
+	</target>
+
+	<target name="release">
+		<antcall target="clean" />
+		<antcall target="release-ear" />
+		<antcall target="release-www" />
+	</target>
+
+	<target name="release-ear">
+		<property name="draftCompile" value="" />
+		<antcall target="deploy-ear" />
+	</target>
+
+	<target name="release-www" depends="optimizejs">
+		<sync todir="${jboss.standalone.deployments.dir}/${www.dist.war}">
+			<fileset dir="${build.dir}/www">
+				<exclude name="**/tpl/*" />
+			</fileset>
+		</sync>
+		<touch file="${jboss.standalone.deployments.dir}/dashboard.war.dodeploy" />
+	</target>
+
+	<target name="clean" description="Delete the contents of the bin and www directories">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="clean-dependencies" depends="clean" description="Delete all downloaded dependencies">
+		<delete dir="${deps.dir}" />
+	</target>
+
+</project>

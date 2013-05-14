@@ -1,0 +1,1 @@
+Dependencies: org.apache.log4j export, org.apache.commons.logging export, org.apache.commons.collections, org.apache.commons.io, org.apache.commons.lang, org.codehaus.jackson.jackson-core-asl, org.codehaus.jackson.jackson-mapper-asl, org.codehaus.jackson.jackson-xc, org.codehaus.jackson.jackson-jaxrs, org.quartz
